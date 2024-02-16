@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import styles1 from '@/styles/app.module.css'
 import styles2 from '@/styles/test.module.css'
+import AppTable from '@/components/app.table'
 
 export default function Home() {
   return (
@@ -16,6 +19,7 @@ export default function Home() {
           <a href='/tiktok'>Tiktok</a>
         </li>
       </ul>
+      <AppTable />
     </div>
   )
 }

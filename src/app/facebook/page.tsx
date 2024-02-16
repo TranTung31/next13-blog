@@ -13,11 +13,8 @@ function Facebook() {
   return (
     <div>
       Facebook Page
-      <div style={{ marginTop: '20px' }}>
-        <button onClick={() => handleBtn()}>Back</button>
-      </div>
-      <div style={{ marginTop: '20px' }}>
-        <Button variant='primary'>Click</Button>
+      <div style={{ margin: '20px 0' }}>
+        <Button variant='primary' onClick={() => handleBtn()}>Back</Button>
       </div>
     </div>
   )
