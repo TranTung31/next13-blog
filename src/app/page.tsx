@@ -20,11 +20,10 @@ export default function Home() {
     }
   )
 
-  console.log('data: ', data)
+  if (!data) return <div>loading...</div>
 
   return (
     <div>
-      <div>Data: {data?.length}</div>
       <ul>
         <li style={{ marginBottom: '20px' }} className={styles1['facebook']}>
           <Link href='/facebook'><div className={styles2['facebook']}>Facebook</div></Link>
@@ -36,7 +35,7 @@ export default function Home() {
           <a href='/tiktok'>Tiktok</a>
         </li>
       </ul>
-      <AppTable />
+      <AppTable blogs={data}/>
     </div>
   )
 }
