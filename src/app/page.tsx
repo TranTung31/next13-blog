@@ -1,11 +1,13 @@
 import Link from 'next/link'
+import styles1 from '@/styles/app.module.css'
+import styles2 from '@/styles/test.module.css'
 
 export default function Home() {
   return (
     <div>
       <ul>
-        <li style={{ marginBottom: '20px' }}>
-          <Link href='/facebook'>Facebook</Link>
+        <li style={{ marginBottom: '20px' }} className={styles1['facebook']}>
+          <Link href='/facebook'><div className={styles2['facebook']}>Facebook</div></Link>
         </li>
         <li style={{ marginBottom: '20px' }}>
           <a href='/youtube'>Youtube</a>
