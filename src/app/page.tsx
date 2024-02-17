@@ -52,7 +52,7 @@ export default function Home() {
         <Button onClick={() => setShowCreateModal(true)}>Add New</Button>
       </div>
 
-      <AppTable blogs={data}/>
+      <AppTable blogs={data?.sort((a: any, b: any) => b.id - a.id)}/>
 
       <CreateModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal}/>
     </div>
