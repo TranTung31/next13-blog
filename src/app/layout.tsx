@@ -1,11 +1,13 @@
 'use client'
 
 // import './globals.css'
-import { Inter } from 'next/font/google'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import AppHeader from '@/components/app.header'
 import AppFooter from '@/components/app.footer'
+import AppHeader from '@/components/app.header'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Inter } from 'next/font/google'
 import Container from 'react-bootstrap/Container'
+import { Bounce, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +27,19 @@ export default function RootLayout({
         <AppHeader />
         <Container>{children}</Container>
         <AppFooter />
+        <ToastContainer 
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
       </body>
     </html>
   )
