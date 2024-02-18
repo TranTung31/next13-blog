@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table'
 import UpdateModal from './update.modal'
 import CreateModal from './create.modal'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
+import { mutate } from 'swr'
 
 interface IProps {
   blogs: IBlog[]
@@ -15,6 +17,25 @@ function AppTable(props: IProps) {
   const [showEditModal, setShowEditModal] = useState<boolean>(false)
 
   const { blogs } = props
+
+  const handleDeleteBlog = (id: number) => {
+    if (confirm(`Delete blog have id is ${id}?`) == true) {
+      fetch(`http://localhost:8000/blogs/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(res => {
+        if (res) {
+          toast.success(`Delete blog have id is ${id} success!`)
+          // Load lại data table sau khi delete blog
+          mutate('http://localhost:8000/blogs')
+        }
+      })
+    }
+  }
 
   return (
     <div>
@@ -60,7 +81,7 @@ function AppTable(props: IProps) {
                   >
                     Edit
                   </Button>
-                  <Button variant='danger'>Delete</Button>
+                  <Button variant='danger' onClick={() => handleDeleteBlog(item.id)}>Delete</Button>
                 </td>
               </tr>
             )
