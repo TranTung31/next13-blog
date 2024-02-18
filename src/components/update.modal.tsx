@@ -1,23 +1,35 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
-import { useState } from 'react'
+import Modal from 'react-bootstrap/Modal'
 import { toast } from 'react-toastify'
 import { mutate } from 'swr'
 
 interface IProps {
-  showCreateModal: boolean;
-  setShowCreateModal: (value: boolean) => void;
+  blog: IBlog | null;
+  setBlog: (value: IBlog | null) => void;
+  showEditModal: boolean;
+  setShowEditModal: (value: boolean) => void;
 }
 
-function CreateModal(props: IProps) {
+function UpdateModal(props: IProps) {
+  const { blog, setBlog, showEditModal, setShowEditModal } = props
+
+  const [id, setId] = useState<number>(0)
   const [title, setTitle] = useState<string>('')
   const [author, setAuthor] = useState<string>('')
   const [content, setContent] = useState<string>('')
 
-  const { showCreateModal, setShowCreateModal } = props
+  useEffect(() => {
+    if (blog && blog.id) {
+      setId(blog.id)
+      setTitle(blog.title)
+      setAuthor(blog.author)
+      setContent(blog.content)
+    }
+  }, [blog])
 
   const handleSubmit = () => {
     if (!title) {
@@ -35,8 +47,8 @@ function CreateModal(props: IProps) {
       return
     }
 
-    fetch('http://localhost:8000/blogs', {
-      method: 'POST',
+    fetch(`http://localhost:8000/blogs/${id}`, {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
@@ -45,7 +57,7 @@ function CreateModal(props: IProps) {
     }).then(res => res.json())
       .then(res => {
         if (res) {
-          toast.success('Create a new blog success!')
+          toast.success(`Edit blog have id is ${id} success!`)
           handleClose()
           // Load lại data table sau khi create blog
           mutate('http://localhost:8000/blogs')
@@ -57,20 +69,21 @@ function CreateModal(props: IProps) {
     setTitle('')
     setAuthor('')
     setContent('')
-    setShowCreateModal(false)
+    setBlog(null)
+    setShowEditModal(false)
   }
 
   return (
     <>
       <Modal
-        show={showCreateModal}
+        show={showEditModal}
         onHide={() => handleClose()}
         backdrop="static"
         keyboard={false}
         size='lg'
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add New A Blog</Modal.Title>
+          <Modal.Title>Update A Blog</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -92,11 +105,11 @@ function CreateModal(props: IProps) {
           <Button variant="secondary" onClick={() => handleClose()}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmit()}>Add</Button>
+          <Button variant="primary" onClick={() => handleSubmit()}>Update</Button>
         </Modal.Footer>
       </Modal>
     </>
   )
 }
 
-export default CreateModal
+export default UpdateModal
