@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <div>
-      <ul>
+      {/* <ul>
         <li style={{ marginBottom: '20px' }} className={styles1['facebook']}>
           <Link href='/facebook'><div className={styles2['facebook']}>Facebook</div></Link>
         </li>
@@ -39,16 +39,17 @@ export default function Home() {
         <li style={{ marginBottom: '20px' }}>
           <a href='/tiktok'>Tiktok</a>
         </li>
-      </ul>
+      </ul> */}
       
       <div 
         style={{
           display: 'flex',
+          alignItems: 'center',
           justifyContent: 'space-between'
         }}
-        className='mb-3'
+        className='mt-3 mb-3'
       >
-        <h3>Table Blogs</h3>
+        <h3 style={{ marginBottom: 0 }}>Table Blogs</h3>
         <Button onClick={() => setShowCreateModal(true)}>Add New</Button>
       </div>
 
