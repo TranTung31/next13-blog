@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Table from 'react-bootstrap/Table'
 import UpdateModal from './update.modal'
+import CreateModal from './create.modal'
+import Link from 'next/link'
 
 interface IProps {
   blogs: IBlog[]
@@ -9,12 +11,25 @@ interface IProps {
 
 function AppTable(props: IProps) {
   const [blog, setBlog] = useState<IBlog | null>(null)
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
   const [showEditModal, setShowEditModal] = useState<boolean>(false)
 
   const { blogs } = props
 
   return (
     <div>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+        className='my-3'
+      >
+        <h3 style={{ marginBottom: 0 }}>Table Blogs</h3>
+        <Button onClick={() => setShowCreateModal(true)}>Add New</Button>
+      </div>
+
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -32,7 +47,7 @@ function AppTable(props: IProps) {
                 <td>{item.title}</td>
                 <td>{item.author}</td>
                 <td>
-                  <Button>View</Button>
+                  <Link href={`/blogs/${item.id}`} className='btn btn-primary'>View</Link>
                   <Button
                     variant='warning'
                     className='mx-3'
@@ -52,6 +67,9 @@ function AppTable(props: IProps) {
           })}
         </tbody>
       </Table>
+
+      <CreateModal showCreateModal={showCreateModal} setShowCreateModal={setShowCreateModal}/>
+
       <UpdateModal
         blog={blog}
         setBlog={setBlog}
